@@ -91,6 +91,21 @@
 ///
 @mixin mdc-text-field-height($height) {
   height: $height;
+
+  @if $height <= 40px {
+    // Target only IE 11
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      .mdc-text-field__input {
+        // Set line-height to the height of input element excluding padding & border.
+        line-height:
+          $height
+          - $mdc-text-field-input-padding
+          - $mdc-text-field-input-padding-top
+          - $mdc-text-field-input-padding-bottom
+          - $mdc-text-field-input-border-bottom;
+      }
+    }
+  }
 }
 
 ///
