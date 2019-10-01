@@ -502,7 +502,9 @@ export class MDCRippleFoundation extends MDCFoundation<MDCRippleAdapter> {
     this.maxRadius_ = this.adapter_.isUnbounded() ? maxDim : getBoundedRadius();
 
     // Ripple is sized as a fraction of the largest dimension of the surface, then scales up using a CSS scale transform
-    this.initialSize_ = Math.floor(maxDim * MDCRippleFoundation.numbers.INITIAL_ORIGIN_SCALE);
+    const initialSize = Math.floor(maxDim * MDCRippleFoundation.numbers.INITIAL_ORIGIN_SCALE);
+    // Ripple size should always be even number to equally center align when unbounded.
+    this.initialSize_ = initialSize % 2 === 0 ? initialSize : initialSize - 1;
     this.fgScale_ = `${this.maxRadius_ / this.initialSize_}`;
 
     this.updateLayoutCssVars_();
